@@ -334,6 +334,10 @@ class GrpcInstrumentorServer(BaseInstrumentor):
 
         def server(*args, **kwargs):
             if "interceptors" in kwargs:
+                # change tuple to list so we can insert our interceptor
+                if isinstance(kwargs["interceptors"], tuple):
+                    kwargs["interceptors"] = list(kwargs["interceptors"])
+
                 # add our interceptor as the first
                 kwargs["interceptors"].insert(
                     0,
